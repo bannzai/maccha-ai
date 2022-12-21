@@ -17,9 +17,23 @@ import {
 import { ChangeEvent, useEffect, useState } from "react";
 
 export default function Home() {
-  const [text, setText] = useState("");
+  const [message, setMessage] = useState("");
+  const [loading, setLoading] = useState(false);
+
   const handleTextAreaOnChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
-    setText(e.target.value);
+    setMessage(e.target.value);
+  };
+  const handleOnClick = async () => {
+    setLoading(true);
+    const response = await fetch("/api/score", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ text: message }),
+    });
+
+    setLoading(false);
   };
 
   return (
@@ -28,9 +42,19 @@ export default function Home() {
         <VStack>
           <Textarea
             placeholder="マッチング相手に初めて送る文章を書いてください"
-            value={text}
+            value={message}
             onChange={handleTextAreaOnChange}
           ></Textarea>
+
+          <Button
+            colorScheme="teal"
+            size="md"
+            width={"100%"}
+            onClick={handleOnClick}
+            isLoading={loading}
+          >
+            送る
+          </Button>
         </VStack>
       </Center>
     </Container>

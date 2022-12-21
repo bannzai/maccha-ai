@@ -6,7 +6,7 @@ const configuration = new Configuration({
 });
 const openai = new OpenAIApi(configuration);
 
-export type NameResponse =
+export type Response =
   | {
       result: "success";
       prompt: string;
@@ -25,7 +25,7 @@ export type NameResponse =
 
 export default async function handler(
   req: NextApiRequest,
-  res: NextApiResponse<NameResponse>
+  res: NextApiResponse<Response>
 ) {
   if (req.method !== "POST") {
     res.status(405).json({
@@ -46,9 +46,9 @@ export default async function handler(
   const rawCompletion = completion.data.choices[0].text;
 
   if (rawCompletion == null) {
-    res.status(200).json({
+    res.status(500).json({
       result: "failure",
-      message: "あだ名が検出できませんでした",
+      message: "採点に失敗しました。もう一度やり直してください",
       extension: {
         body: req.body,
         prompt,
