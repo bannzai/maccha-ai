@@ -15,16 +15,19 @@ import {
   Container,
 } from "@chakra-ui/react";
 import { ChangeEvent, useEffect, useState } from "react";
+import { ScoreResponse } from "./api/score";
 
 export default function Home() {
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
+  const [response, setResponse] = useState<ScoreResponse | null>(null);
 
   const handleTextAreaOnChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
     setMessage(e.target.value);
   };
   const handleOnClick = async () => {
     setLoading(true);
+
     const response = await fetch("/api/score", {
       method: "POST",
       headers: {
@@ -32,6 +35,9 @@ export default function Home() {
       },
       body: JSON.stringify({ message }),
     });
+
+    const score = (await response.json()) as ScoreResponse;
+    setResponse(score);
 
     setLoading(false);
   };

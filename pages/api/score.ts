@@ -6,7 +6,7 @@ const configuration = new Configuration({
 });
 const openai = new OpenAIApi(configuration);
 
-export type Response =
+export type ScoreResponse =
   | {
       result: "success";
       prompt: string;
@@ -25,7 +25,7 @@ export type Response =
 
 export default async function handler(
   req: NextApiRequest,
-  res: NextApiResponse<Response>
+  res: NextApiResponse<ScoreResponse>
 ) {
   if (req.method !== "POST") {
     res.status(405).json({
