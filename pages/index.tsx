@@ -9,8 +9,11 @@ export default function Root() {
   return (
     <>
       <Head>
-        <title>Macha AI</title>
-        <meta name="description" content="マッチングアプリのチャットを採点" />
+        <title>Maccha AI</title>
+        <meta
+          name="description"
+          content="マッチングアプリのチャットを採点します"
+        />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
