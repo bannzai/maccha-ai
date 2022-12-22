@@ -37,7 +37,7 @@ export default async function handler(
   }
 
   const { message } = req.body;
-  const prompt = `マッチングアプリでマッチした女性へ最初に送るメッセージが「${message}」の点数は100点満点中`;
+  const prompt = `マッチングアプリでマッチした相手へ最初に送るメッセージが「${message}」の点数は100点満点中`;
   const completion = await openai.createCompletion({
     model: "text-davinci-002",
     temperature: 0.5,

@@ -81,7 +81,7 @@ export default function Home() {
           ></Textarea>
 
           <Text>
-            マッチングアプリでマッチした女性へ最初に送るメッセージが 「{message}
+            マッチングアプリでマッチした相手へ最初に送るメッセージが 「{message}
             」の点数は100点満点中
           </Text>
 
@@ -108,7 +108,7 @@ export default function Home() {
               </Text>
               <HStack>
                 <TwitterShareButton
-                  title={`マッチングアプリでマッチした女性へ最初に送るメッセージが 「${message}」の点数は100点満点中${score.score} #macchai`}
+                  title={`マッチングアプリでマッチした相手へ最初に送るメッセージが 「${message}」の点数は100点満点中${score.score} #macchai`}
                   url={"https://maccha-ai.vercel.app/"}
                   style={{
                     background: "#359BF0",
