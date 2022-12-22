@@ -20,7 +20,14 @@ import { ScoreResponse } from "./api/score";
 export default function Home() {
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
-  const [response, setResponse] = useState<ScoreResponse | null>(null);
+  const [score, setScore] = useState<Extract<
+    ScoreResponse,
+    { result: "success" }
+  > | null>(null);
+  const [error, setError] = useState<Extract<
+    ScoreResponse,
+    { result: "failure" }
+  > | null>(null);
 
   const handleTextAreaOnChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
     setMessage(e.target.value);
@@ -37,10 +44,22 @@ export default function Home() {
     });
 
     const score = (await response.json()) as ScoreResponse;
-    setResponse(score);
+    if (score.result === "success") {
+      setScore(score);
+    } else {
+      setError(score);
+    }
 
     setLoading(false);
   };
+
+  const length = Array.from(Array(score?.score.length ?? 0).keys());
+  const top = Array.from(length)
+    .map(() => "人")
+    .join("");
+  const bottom = Array.from(length)
+    .map(() => "Y^")
+    .join("");
 
   return (
     <Container maxWidth={"800px"}>
@@ -52,6 +71,11 @@ export default function Home() {
             onChange={handleTextAreaOnChange}
           ></Textarea>
 
+          <Text>
+            マッチングアプリでマッチした女性へ最初に送るメッセージが 「{message}
+            」の点数は100点満点中
+          </Text>
+
           <Button
             colorScheme="teal"
             size="md"
@@ -59,8 +83,31 @@ export default function Home() {
             onClick={handleOnClick}
             isLoading={loading}
           >
-            送る
+            採点する
           </Button>
+
+          {score && (
+            <VStack>
+              <Text fontWeight={"bold"} fontSize={"2xl"}>
+                {top}
+              </Text>
+              <Text fontWeight={"bold"} fontSize={"2xl"}>
+                {`＞　${score.score}　＜`}
+              </Text>
+              <Text fontWeight={"bold"} fontSize={"2xl"}>
+                {bottom}
+              </Text>
+            </VStack>
+          )}
+          {error && (
+            <div>
+              <Alert status="error">
+                <AlertIcon />
+                <AlertTitle>リクエストに失敗しました</AlertTitle>
+                <AlertDescription>{error.message}</AlertDescription>
+              </Alert>
+            </div>
+          )}
         </VStack>
       </Center>
     </Container>

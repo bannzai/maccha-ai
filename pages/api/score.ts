@@ -11,6 +11,7 @@ export type ScoreResponse =
       result: "success";
       prompt: string;
       rawCompletion: string;
+      score: string;
       fullText: string;
     }
   | {
@@ -39,8 +40,9 @@ export default async function handler(
   const prompt = `マッチングアプリでマッチした女性へ最初に送るメッセージが「${message}」の点数は100点満点中`;
   const completion = await openai.createCompletion({
     model: "text-davinci-002",
+    temperature: 0.5,
     prompt,
-    max_tokens: 100,
+    max_tokens: 10,
     stop: "点",
     suffix: "点です！",
   });
@@ -57,11 +59,17 @@ export default async function handler(
       },
     });
   } else {
+    const score = rawCompletion + "点です！";
+    const fullText = prompt + score;
+
+    console.log({ fullText });
+
     res.status(200).json({
       result: "success",
       prompt,
+      score,
       rawCompletion,
-      fullText: prompt + rawCompletion + "点です！",
+      fullText,
     });
   }
 }
