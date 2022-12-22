@@ -35,12 +35,13 @@ export default async function handler(
     return;
   }
 
-  const prompt = `マッチングアプリでマッチした女性へ最初に送るメッセージが「${req.body}」の場合の点数は`;
+  const { message } = req.body;
+  const prompt = `マッチングアプリでマッチした女性へ最初に送るメッセージが「${message}」の点数は100点満点中`;
   const completion = await openai.createCompletion({
     model: "text-davinci-002",
-    prompt: prompt,
-    max_tokens: 25,
-    best_of: 1,
+    prompt,
+    max_tokens: 100,
+    stop: "点",
     suffix: "点です！",
   });
   const rawCompletion = completion.data.choices[0].text;
@@ -60,7 +61,7 @@ export default async function handler(
       result: "success",
       prompt,
       rawCompletion,
-      fullText: prompt + rawCompletion,
+      fullText: prompt + rawCompletion + "点です！",
     });
   }
 }

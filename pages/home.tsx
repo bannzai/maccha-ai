@@ -30,7 +30,7 @@ export default function Home() {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ text: message }),
+      body: JSON.stringify({ message }),
     });
 
     setLoading(false);
