@@ -8,14 +8,15 @@ import {
   AlertDescription,
   Center,
   VStack,
-  HStack,
   Box,
-  Spacer,
   Image,
   Container,
+  HStack,
 } from "@chakra-ui/react";
 import { ChangeEvent, useEffect, useState } from "react";
 import { ScoreResponse } from "./api/score";
+import { TwitterShareButton } from "react-share";
+import { FaTwitter } from "react-icons/fa";
 
 export default function Home() {
   const [message, setMessage] = useState("");
@@ -105,6 +106,22 @@ export default function Home() {
               <Text fontWeight={"bold"} fontSize={"2xl"}>
                 {bottom}
               </Text>
+              <HStack>
+                <TwitterShareButton
+                  title={`マッチングアプリでマッチした女性へ最初に送るメッセージが 「${message}」の点数は100点満点中${score.score} #macchai`}
+                  url={"https://maccha-ai.vercel.app/"}
+                  style={{
+                    background: "#359BF0",
+                    borderRadius: "50%",
+                    padding: "0.5rem",
+                  }}
+                >
+                  <Box p={0.8}>
+                    <FaTwitter color={"white"} />
+                  </Box>
+                </TwitterShareButton>
+                <Text>でシェアする</Text>
+              </HStack>
             </VStack>
           )}
           {error && (
