@@ -31,6 +31,7 @@ export default function Home() {
 
   const handleTextAreaOnChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
     setMessage(e.target.value);
+    setScore(null);
   };
   const handleOnClick = async () => {
     setLoading(true);
@@ -62,9 +63,16 @@ export default function Home() {
     .join("");
 
   return (
-    <Container maxWidth={"800px"}>
+    <Container width={"800px"}>
       <Center h={"100vh"}>
         <VStack>
+          <Box boxSize="sm">
+            <Image
+              src="https://2.bp.blogspot.com/-qv_23cy1FoA/WwofU666QOI/AAAAAAABMYQ/GNr1ueRx7C8e6aHiFMOgazkIvw6rxEmYQCLcBGAs/s800/smartphone_matching_app_renai.png"
+              alt="マッチング"
+            />
+          </Box>
+
           <Textarea
             placeholder="マッチング相手に初めて送る文章を書いてください"
             value={message}
