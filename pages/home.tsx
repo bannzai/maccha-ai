@@ -64,7 +64,7 @@ export default function Home() {
     .join("");
 
   return (
-    <Container width={"800px"}>
+    <Container maxWidth={"800px"}>
       <Center h={"100vh"}>
         <VStack>
           <Box boxSize="sm">
