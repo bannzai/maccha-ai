@@ -44,7 +44,7 @@ export default async function handler(
     prompt,
     max_tokens: 10,
     stop: "点",
-    suffix: "点です",
+    suffix: "点です！",
   });
   const rawCompletion = completion.data.choices[0].text;
 
@@ -59,7 +59,7 @@ export default async function handler(
       },
     });
   } else {
-    const score = rawCompletion + "点です";
+    const score = rawCompletion + "点です！";
     const fullText = prompt + score;
 
     console.log({ fullText });
